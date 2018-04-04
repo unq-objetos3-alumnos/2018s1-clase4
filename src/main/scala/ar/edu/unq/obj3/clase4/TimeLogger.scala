@@ -13,7 +13,7 @@ class UserRepository {
   }
 }
 
-object Main extends App {
+object TimeLogger extends App {
   val repository = new UserRepository()
 
   val startTime = System.currentTimeMillis()
