@@ -13,19 +13,23 @@ class UserRepository {
   }
 }
 
+object Logger {
+  def log[T](bloque:()=>T): T = {
+    val startTime = System.currentTimeMillis()
+
+    val result = bloque.apply()
+
+    val endTime = System.currentTimeMillis()
+    println(s"took ${endTime - startTime}ms")
+    result
+  }
+}
+
 object TimeLogger extends App {
   val repository = new UserRepository()
 
-  val startTime = System.currentTimeMillis()
-  repository.removeUser(User("a"))
-  val endTime = System.currentTimeMillis()
-  println(s"removeUser took ${endTime - startTime}ms")
+  Logger.log(()=>repository.removeUser(User("a")))
 
-
-  val startTime2 = System.currentTimeMillis()
-  val users = repository.listUsers()
-  val endTime2 = System.currentTimeMillis()
-  println(s"removeUser took ${endTime2 - startTime2}ms")
-
+  val users = Logger.log(()=> repository.listUsers())
 
 }
